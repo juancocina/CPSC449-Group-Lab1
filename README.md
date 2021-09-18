@@ -2,7 +2,7 @@
 For - Professor Kenytt Avery
 
 Group Members:
--Tilak Ghorashainee
+- Tilak Ghorashainee
 -
 - Juan Cocina
 
