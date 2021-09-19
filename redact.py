@@ -17,8 +17,9 @@ print('Example: "/because/ProfAvery" ')
 f = sys.argv[1]
 
 # Use http.client.HTTPSConnection with the Accept: application/json request header
-h1 = http.client.HTTPSConnection("https://foaas.com:8080")
-headers = {"Accept": "application/json"}
+h1 = http.client.HTTPSConnection("foaas.com")
 h1.request("GET", "/")
 
 # checking response from foaas
+res = h1.getresponse()
+print(res.status, res.reason)
