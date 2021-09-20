@@ -7,7 +7,6 @@ import sys
 import ssl
 import http.client
 import json
-import urllib.parse
 
 # Display script use
 print('Usage: redact URL')
@@ -19,8 +18,9 @@ f = sys.argv[1]
 
 # Use http.client.HTTPSConnection with the Accept: application/json request header
 h1 = http.client.HTTPSConnection("foaas.com")
-header = {"Accept": "application/json"}
-h1.request("GET", "/because/KenyttAvery", header)
+
+headers = {"Accept": "application/json"}
+h1.request("GET", f, "", headers)
 
 # checking response from foaas
 res = h1.getresponse()
