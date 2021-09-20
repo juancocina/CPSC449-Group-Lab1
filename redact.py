@@ -8,6 +8,7 @@ import ssl
 import http.client
 import json
 import urllib
+import urllib.request
 
 # Display script use
 print('Usage: redact URL')
@@ -27,18 +28,26 @@ res = h1.getresponse()
 if res.status == 200:
     print("Successfully connected")
 
-    # attempting to use json
+    # converting incoming message to json and parsing
     incoming = res.read()
     data = json.loads(incoming.decode())
     message = data['message']
+    subtitle = data['subtitle']
     print("Raw data: ", data)
     print("'Message' parameter: ", message)
     parsed_message = urllib.parse.quote(message)
     print("Parsed: ", parsed_message)
+    print('')
 
-    # attempting to connect to purgomalum.com
-    h2 = http.client.HTTPSConnection("purgomalum.com")
-    h2.request("GET", "/")
+    # connecting to purgomalum.com, retreiving message, converting to json, printing
+    url = "https://www.purgomalum.com/service/json?text=" + parsed_message
+    h2 = urllib.request.urlopen(url)
+    censored = h2.read()
+    censored_data = json.loads(censored.decode())
+    # prints the final censored message
+    final_message = censored_data['result']
+    print(json.dumps(final_message, indent = 4))
+    print(json.dumps(subtitle, indent = 4))
 
 else:
     # exit program
