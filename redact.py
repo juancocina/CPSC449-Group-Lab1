@@ -1,6 +1,6 @@
 # Class: CPSC 449
 # Project: # 1
-# Members: Tilak Ghorashainee, Juan Cocina, ..
+# Members: Tilak Ghorashainee, Juan Cocina, Alberto Perez ..
 
 # Project Description can be found at the repo...
 import sys
@@ -9,6 +9,27 @@ import http.client
 import json
 import urllib
 import urllib.request
+
+import http.server
+import socketserver
+
+PORT = 8080
+
+def servercall(p):
+    pay=p
+    
+    class ExHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.end_headers()
+    
+            payload = '<h1>'+pay+'</h1>'
+            self.wfile.write(payload.encode('utf-8'))
+            
+    with socketserver.TCPServer(("", PORT), ExHTTPRequestHandler) as httpd:
+        print("serving at port", PORT)
+        httpd.serve_forever()
 
 # Display script use
 print('Usage: redact URL')
@@ -48,6 +69,10 @@ if res.status == 200:
     final_message = censored_data['result']
     print(json.dumps(final_message, indent = 4))
     print(json.dumps(subtitle, indent = 4))
+    
+    mes=json.dumps(final_message, indent = 4)
+    
+    servercall(p=mes)
 
 else:
     # exit program
