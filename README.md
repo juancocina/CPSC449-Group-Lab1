@@ -3,7 +3,7 @@ For - Professor Kenytt Avery
 
 Group Members:
 - Tilak Ghorashainee
--
+- Alberto Perez
 - Juan Cocina
 
 # Project Objective:
