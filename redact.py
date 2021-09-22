@@ -15,8 +15,9 @@ import socketserver
 
 PORT = 8080
 
-def servercall(p):
+def servercall(p, s):
     pay=p
+    subt=s
     
     class ExHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         def do_GET(self):
@@ -25,7 +26,9 @@ def servercall(p):
             self.end_headers()
     
             payload = '<h1>'+pay+'</h1>'
+            subload = '<h2>'+subt+'</h2>'
             self.wfile.write(payload.encode('utf-8'))
+            self.wfile.write(subload.encode('utf-8'))
             
     with socketserver.TCPServer(("", PORT), ExHTTPRequestHandler) as httpd:
         print("serving at port", PORT)
@@ -71,8 +74,9 @@ if res.status == 200:
     print(json.dumps(subtitle, indent = 4))
     
     mes=json.dumps(final_message, indent = 4)
+    sub=json.dumps(subtitle, indent = 4)
     
-    servercall(p=mes)
+    servercall(p=mes, s=sub)
 
 else:
     # exit program
