@@ -52,14 +52,21 @@ def servercall(p, s):
                 final_message = censored_data['result']
                 message = f"""
                     {final_message}
+                """
+                sub_message = f"""
                     {subtitle}
                 """
 
-            # payload = '<h1>'+pay+'</h1>'
-            # subload = '<h2>'+subt+'</h2>'
-            payload =  '<h1>' + message + '</h1>'
+            payload =  '<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">' \
+                       '<h1>' + message + '</h1>'
+            subload = '<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">'\
+                        '<h2>'+ sub_message +'</h2>'
+            link = '<br><br><p><a href="https://foaas.com/">foaas.com</p>'
+
+            # write message to webpage
             self.wfile.write(payload.encode('utf-8'))
-            # self.wfile.write(subload.encode('utf-8'))
+            self.wfile.write(subload.encode('utf-8'))
+            self.wfile.write(link.encode('utf-8'))
             
     with socketserver.TCPServer(("", PORT), ExHTTPRequestHandler) as httpd:
         print("serving at port", PORT)
